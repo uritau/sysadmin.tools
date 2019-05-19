@@ -1,0 +1,7 @@
+---
+#handlers file for aws_preparation
+- name: Update hosts
+  lineinfile:
+    path: /etc/hosts
+    regexp: '^127.0.1.1'
+    line: '127.0.1.1 {{ servername}}'

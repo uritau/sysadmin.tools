@@ -1,0 +1,18 @@
+---
+- name: Ensure git and all related software is installed
+  hosts: new_machines
+  become: yes
+  gather_facts: no
+
+  tasks:
+    - name: "Install GIT (and meld, sets user, gitk ..."
+      import_role:
+        name: rattermeyer.git
+
+    - name: "Ensure all alias are well defined"
+      command: "git config --global alias.{{ item.shortcut }} {{ item.command }}"
+      with_items:
+      - {shortcut: "co", command: "checkout" }
+      - {shortcut: "br", command: "branch" }
+      - {shortcut: "ci", command: "commit" }
+      - {shortcut: "st", command: "status" }

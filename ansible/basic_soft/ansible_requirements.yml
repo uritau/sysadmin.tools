@@ -1,0 +1,7 @@
+---
+- src: geerlingguy.docker
+- src: azavea.terraform
+- src: singleplatform-eng.awscli
+- src: ericsysmin.kubectl
+- src: andrewrothstein.minikube
+- src: gantsign.visual-studio-code

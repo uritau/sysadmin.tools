@@ -1,0 +1,41 @@
+
+#
+#Enables color highlighting for cat
+#
+---
+- hosts: localhost
+  become: yes
+  gather_facts: no
+
+  vars:
+    user_with_shell: "uri"
+    fish_function_folders: /home/"{{ user_with_shell }}"/.config/fish/functions
+
+  tasks:
+  - name: Ensure apt cache is up to date
+    apt: update_cache=yes 
+
+  - name: Ensure fish repository source is present
+    apt_repository:
+      repo: ppa:fish-shell/release-2
+      state: present
+
+  - name: Ensure apt cache is up to date
+    apt: update_cache=yes
+
+  - name: Ensure pygmentize ans fish are on the system
+    apt: name={{ item }}
+    with_items:
+      - python-pygments
+      - fish
+
+  - name: Change user shell
+    user:
+      name: "{{ user_with_shell }}"
+      shell: /usr/bin/fish
+
+  - name: Creates directory for shell functions
+    file: path={{ fish_function_folders }} state=directory owner="{{ user_with_shell }}"
+
+  - name: Configures cat
+    shell: printf 'function cat\n pygmentize -g $argv\n end' > {{fish_function_folders}}/cat.fish

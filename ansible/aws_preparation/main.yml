@@ -1,0 +1,6 @@
+#Launch tasks
+---
+#- import_playbook: tasks/swap.yml
+- import_playbook: tasks/servername.yml
+- import_playbook: tasks/timezone.yml
+- import_playbook: tasks/motd.yml

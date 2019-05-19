@@ -1,0 +1,14 @@
+---
+- name: Ensure k8s all related software is installed
+  hosts: new_machines
+  become: yes
+  gather_facts: no
+
+  tasks:
+  - name: "Install k8s"
+    import_role:
+      name: ericsysmin.kubectl
+
+  - name: "Install Minikube"
+    import_role:
+      name: andrewrothstein.minikube

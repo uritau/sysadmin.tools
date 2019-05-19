@@ -1,0 +1,8 @@
+#Secrets
+vars/secrets.yml
+
+#Ansible errors
+*.retry
+
+#Hosts files
+hosts

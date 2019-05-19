@@ -1,0 +1,69 @@
+---
+- name: Set Up zsh
+  hosts: new_machines
+  gather_facts: no
+  become_user: "{{ username }}"
+
+  tasks:
+    - name: 'install zsh and friends'
+      become: yes
+      become_user: "root"
+      cache_valid_time: 3600
+      apt:
+        name: "{{ item }}"
+      with_items:
+        - "git-core"
+        - "powerline"
+        - "zsh"
+
+    - name: 'Ensure the ~/src-hub directory is present'
+      file:
+        path: "/home/{{ username }}/src-hub"
+        state: "directory"
+
+    - name: 'Clone oh-my-zsh'
+      git:
+        force: yes
+        repo: "https://github.com/robbyrussell/oh-my-zsh.git"
+        dest: "/home/{{ username }}/src-hub/oh-my-zsh"
+
+    - name: 'Ensure oh-my-zsh folder is empty'
+      file:
+        state: absent
+        path: "/home/{{ username }}/src-hub/oh-my-zsh/custom/plugins/"
+
+    - name: 'Clone dircolors-solarized plugin'
+      git:
+        force: yes
+        repo: "https://github.com/joel-porquet/zsh-dircolors-solarized"
+        dest: "/home/{{ username }}/src-hub/oh-my-zsh/custom/plugins"
+
+    - name: 'Create symlink to oh-my-zsh'
+      file:
+        path: "/home/{{ username }}/.oh-my-zsh"
+        src: "/home/{{ username }}/src-hub/oh-my-zsh"
+        state: "link"
+
+    - name: 'Check if .zshrc exists'
+      stat:
+        path: "/home/{{ username }}/.zshrc"
+      register: zshrc
+
+    - name: 'Back up existing .zshrc file if it exists'
+      when: zshrc.stat.exists
+      copy:
+        remote_src: yes
+        src: "/home/{{ username }}/.zshrc"
+        dest: "/home/{{ username }}/.zshrc-orig"
+
+    - name: 'Copy zshrc to user home'
+      copy:
+        remote_src: yes
+        src: "/home/{{ username }}/src-hub/oh-my-zsh/templates/zshrc.zsh-template"
+        dest: "/home/{{ username }}/.zshrc"
+        force: yes
+
+    - name: 'Change user shell to zsh'
+      become: yes
+      become_user: root
+      command: chsh -s /bin/zsh "{{ username }}"

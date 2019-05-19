@@ -1,0 +1,31 @@
+---
+- hosts: new_machines
+  become: yes
+  gather_facts: yes
+
+  tasks:
+  - name: 'Add ansible repository to apt'
+    apt_repository:
+      repo: ppa:ansible/ansible
+
+  - name: 'Ensure Ansible is installed'
+    apt: name={{item}}
+    cache_valid_time: 3600
+    with_items:
+        - ansible
+
+  - name: 'Ensure Ansible lint is installed'
+    pip:
+      name: ansible-lint
+
+  - name: "Install docker and docker-compose"
+    import_role:
+      name: geerlingguy.docker
+
+  - name: "Install Terraform"
+    import_role:
+      name: azavea.terraform
+
+  - name: 'Install awscli'
+    import_role:
+      name: singleplatform-eng.awscli

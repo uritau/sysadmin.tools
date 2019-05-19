@@ -1,0 +1,7 @@
+---    
+all_users_list:
+- name: USER1
+  ssh_key_list:
+    - ssh-rsa asdfasdfasdfKey1 user@example
+    - ssh-rsa asdfadsfadsfadsfasdf userN@asdfasdf
+  

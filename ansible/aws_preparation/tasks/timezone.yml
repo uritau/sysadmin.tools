@@ -1,0 +1,33 @@
+#Configure timezone
+---
+- hosts: aws
+  become: yes
+  gather_facts: no
+  vars_files:
+    - ../vars/main.yml
+
+  tasks:
+  - name: 'Ensure ntpdate and ntpstat package exists'
+    apt:
+      update_cache: yes
+      name: "{{ item }}"
+    with_items:
+        - "ntpdate"
+        - "ntpstat"
+    tags:
+      - "timezone"
+
+  - name: "Delete old timezone configuration"
+    file:
+      name: /etc/localtime
+      state: absent
+    tags:
+      - "timezone"
+
+  - name: "Configure timezone"
+    file:
+      src: /usr/share/zoneinfo/Europe/Madrid
+      dest: /etc/localtime 
+      state: link
+    tags:
+      - "timezone"

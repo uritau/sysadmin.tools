@@ -1,0 +1,41 @@
+#
+#Copy ssh keys
+#
+---
+- hosts: ssh
+  become: yes
+  gather_facts: yes
+  vars_files: 
+    - vars/main.yml
+
+  tasks:
+  - name: 'Ensure user keys are present'
+    debug:
+      msg: "{{ item.0.name }} and {{ item.1 }}"
+    with_subelements:
+     - "{{ all_users_list }}"
+     - ssh_key_list
+    when: item.0.name in allowed_users
+
+
+  
+  - name: Add SSH keys
+    authorized_key:
+      user: "{{ remote_user }}"
+      state: present
+      key: "{{ item.1 }}"
+    with_subelements:
+     - "{{ all_users_list }}"
+     - ssh_key_list
+    when: item.0.name in allowed_users
+
+
+  - name: Delete ssh Keys
+    authorized_key:
+      user: "{{ remote_user }}"
+      state: absent
+      key: "{{ item.1 }}"
+    with_subelements:
+     - "{{ all_users_list }}"
+     - ssh_key_list
+    when: item.0.name in revoqued_users

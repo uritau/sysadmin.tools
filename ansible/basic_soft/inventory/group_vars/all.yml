@@ -1,0 +1,70 @@
+---
+username: "uri"
+userhome: "/home/{{ username }}"
+
+## Role lciolecki.virtualenvwrapper:
+virtualenvwrapper_python: "/usr/bin/python3.6"
+virtualenvwrapper_shell_file: "{{ lookup('env', 'HOME') }}/.zshrc"
+
+## Role rattermeyer.git
+git:
+  user:
+    account: "{{ username }}"
+    name: "Oriol Tauleria"
+    email: "oriol.tauleria@gmail.com"
+
+## Role singleplatform-eng.awscli
+awscli_user: "{{ username }}"
+awscli_user_home_dir: "{{ userhome }}"
+
+## Role gantsign.visual-studio-code
+users:
+  - username: "{{ username }}"
+    visual_studio_code_extensions:
+      - Shan.code-settings-sync
+      - ms-vscode.Go
+      - oderwat.indent-rainbow
+      - wholroyd.jinja
+      - samuelcolvin.jinjahtml
+      - eriklynd.json-tools
+      - donjayamanne.jupyter
+      - ipedrazas.kubernetes-snippets
+      - magicstack.MagicPython
+      - alefragnani.project-manager
+      - tht13.python
+      - ms-python.python
+      - 2gua.rainbow-brackets
+      - mauve.terraform
+      - run-at-scale.terraform-doc-snippets
+      - shardulm94.trailing-spaces
+      - vscoss.vscode-ansible
+      - rupisaini.vscode-ansible-linter
+      - batisteo.vscode-django
+      - PeterJausovec.vscode-docker
+      - howardzuo.vscode-git-blamer
+      - ms-kubernetes-tools.vscode-kubernetes-tools
+      - redhat.vscode-yaml
+      - VisualStudioExptTeam.vscodeintellicode
+      - ms-vsliveshare.vsliveshare
+    visual_studio_code_settings: {
+      "git.autofetch": true,
+      "python.jediEnabled": false,
+      "files.watcherExclude": {
+          "**/.terraform/**": true
+      },
+      "window.zoomLevel": 0,
+      "editor.tabSize": 2,
+      "files.exclude": {
+          "**/.terraform": true,
+          "**/*.retry": true
+      },
+      "explorer.confirmDragAndDrop": false,
+      "breadcrumbs.enabled": true,
+      "editor.renderWhitespace": "boundary",
+      "files.associations": {
+          "*.yml": "ansible"
+      },
+      "editor.suggestSelection": "first",
+      "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+      "liveshare.featureSet": "insiders"
+    }

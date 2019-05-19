@@ -1,0 +1,26 @@
+#Configure SWAP files
+---
+- hosts: aws
+  become: yes
+  gather_facts: no
+  vars_files:
+    - ../vars/main.yml
+
+  tasks:
+  - name: 'Ensure figlet package is present'
+    apt:
+      name: "figlet"
+
+  - name: 'Ensure non-needed files does not exists'
+    file:
+      path: "/etc/update-motd.d/{{ item }}"
+      state: absent
+    with_items:
+      - '10-help-text'
+      - '51-cloudguest'
+
+  - name: 'Append figlet server name to init message'
+    lineinfile:
+      path: "/etc/update-motd.d/00-header"
+      regexp: '^figlet'
+      line: 'figlet "{{ servername}}"'

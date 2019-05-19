@@ -1,0 +1,1 @@
+ec2-expire-snapshots --aws-access-key-id {{ aws_access_key }} --aws-secret-access-key {{ aws_secret_key}} --region {{ region }} --keep-first-daily {{ days_to_save }} --keep-first-monthly {{ months_to_save }} {{ volume_id }}

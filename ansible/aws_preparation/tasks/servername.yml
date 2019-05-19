@@ -1,0 +1,17 @@
+#Configure SWAP files
+---
+- hosts: aws
+  become: yes
+  gather_facts: no
+  
+  handlers:
+  - import_tasks: ../handlers/servername.yml
+
+  vars_files:
+    - ../vars/main.yml
+
+  tasks: 
+  - name: "Change server name"
+    hostname: 
+      name: '{{ servername }}'
+    notify: 'Update hosts'

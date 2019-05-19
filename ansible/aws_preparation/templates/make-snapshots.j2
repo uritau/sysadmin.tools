@@ -1,0 +1,2 @@
+ec2-consistent-snapshot --aws-access-key-id {{ aws_access_key }} --aws-secret-access-key {{ aws_secret_key}} --description="{{ description }}" --freeze-filesystem / --region {{ region }} {{ volume_id }}
+

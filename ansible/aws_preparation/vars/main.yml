@@ -1,0 +1,5 @@
+---
+swap_file_path: "/swapfile"
+swap_file_size_kb: "2048"
+
+servername: "escaldatsweb"

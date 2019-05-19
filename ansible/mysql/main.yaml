@@ -1,0 +1,39 @@
+
+#
+#Installs everything for mysql
+#
+---
+- hosts: mysqls
+  become: yes
+  gather_facts: no
+
+  vars:
+    mysql_root_password: calidae
+
+  tasks:
+  - name: Ensure apt cache is up to date
+    apt: update_cache=yes 
+
+  - name: Ensure MySQL package is installed
+    apt: name={{ item }}
+    with_items:
+      - python-mysqldb
+      - mysql-server
+
+
+  - name: Start the MySQL service
+    service: 
+      name: mysql 
+      state: started
+      enabled: true
+
+
+  - name: update mysql root password for all root accounts
+    mysql_user: 
+      name: root 
+      password: "{{ mysql_root_password }}"
+      login_user: root
+      login_password: "{{ mysql_root_password }}"
+      check_implicit_admin: yes
+      priv: "*.*:ALL,GRANT"
+

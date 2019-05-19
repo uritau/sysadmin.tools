@@ -1,0 +1,29 @@
+---
+- hosts: new_machines
+  become: yes
+  gather_facts: no
+
+  tasks:
+  - name: 'Ensure requisites for ansible are present'
+    raw: apt update && apt install python-minimal -y
+
+  - name: 'Ensure basic software packages are installed'
+    cache_valid_time: 3600
+    apt: 
+        name: "{{item}}"
+    with_items:
+        - "vim"
+        - "git"
+        - "terminator"
+        - "lynx"
+        - "traceroute"
+        - "nmap"
+        - "software-properties-common"
+        - "virtualbox"
+        - "vagrant"
+        - "shutter"
+        - "build-essential"
+        - "filezilla"
+        - "gdebi"
+        - "net-tools"
+        - "openssh-server"
