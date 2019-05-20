@@ -4,4 +4,4 @@
 - import_playbook: playbooks/python.yml
 - import_playbook: playbooks/git.yml
 - import_playbook: playbooks/devops.yml
-- import_playbook: playbooks/graphic.yml
+- import_playbook: playbooks/x11.yml

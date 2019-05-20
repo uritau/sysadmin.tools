@@ -9,3 +9,4 @@
 - src: rattermeyer.git
 - src: iknite.spotify
 - src: patrick-hill.franz
+- src: avnes.ansible-role-slack

@@ -1,0 +1,22 @@
+---
+- name: "Ensure graphic packages are installed"
+  hosts: new_machines
+  become: yes
+  gather_facts: yes
+
+  tasks:
+    - name: "Ensure Spotify it's installed"
+      import_role:
+        name: iknite.spotify
+
+    - name: "Ensure Franz it's installed"
+      import_role:
+        name: patrick-hill.franz
+
+    - name: "Ensure Visual studio code it's installed"
+      import_role:
+        name: gantsign.visual-studio-code
+
+    - name: "Ensure Slack it's installed"
+      import_role:
+        name: avnes.ansible-role-slack
