@@ -1,5 +1,5 @@
 ---
-username: "uri"
+username: "oriol"
 userhome: "/home/{{ username }}"
 
 ## Role lciolecki.virtualenvwrapper:

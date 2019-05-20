@@ -5,13 +5,13 @@
   gather_facts: yes
 
   tasks:
-    # - name: "Install Spotify"
-    #   import_role:
-    #     name: iknite.spotify
+    - name: "Install Spotify"
+      import_role:
+        name: iknite.spotify
 
-    # - name: "Install Franz"
-    #   import_role:
-    #     name: patrick-hill.franz
+    - name: "Install Franz"
+      import_role:
+        name: patrick-hill.franz
 
     - name: "Install Visual studio code"
       import_role:
