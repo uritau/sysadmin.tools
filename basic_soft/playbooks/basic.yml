@@ -21,6 +21,7 @@
         - "software-properties-common"
         - "virtualbox"
         - "vagrant"
+        - "jq"
         - "shutter"
         - "build-essential"
         - "filezilla"
